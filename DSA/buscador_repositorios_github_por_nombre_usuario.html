@@ -1,0 +1,48 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Entrar base de datos Github</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#btn").click(function(){
+        $.ajax({ 
+            type: 'GET', 
+            url: 'https://api.github.com/users/' + $("#usr").val() + '/repos',
+            data: { get_param: 'login' }, 
+            dataType: 'json',
+            success: function (data) { 
+                $.each(data, function(index, element) {
+                    $("#tabla").append($("<tr><td>" + element.name + "</td><td>" + element.description + "</td><td>" + element.stargazers_count + "</td></tr>"))
+                });
+            }
+        });
+    });
+});
+
+</script>
+</head>
+<body>
+<div class="container">
+<pre>
+<h2><strong>Base de Datos Github</strong></h2><p>Porfavor ingrese el Correo o usuario y contraseña para acceder a la Base de Datos y ver sus repositorios</p><form><div class="form-group"><label for="usr">Correo o Usuario:</label><input type="text" id="usr">
+        <button id="btn" type="button">Buscar</button>
+</div>
+</form>
+</pre>        
+  <table class="table" id="tabla">
+    <thead>
+      <tr>
+        <th>Nombre del repositorio</th>
+        <th>Descripcion</th>
+        <th>Numero de Followers</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+</body>
+</html>
